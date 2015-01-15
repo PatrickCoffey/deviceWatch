@@ -5,7 +5,3 @@
 # ------------------------------
 # This is the classes/functions to
 # Maintain/Manipulate the Devices
-
-import os
-import platform
-

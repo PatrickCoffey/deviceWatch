@@ -14,11 +14,11 @@ import subprocess
 
 import pingparser
 
-class device():
+class device(object):
     '''device(base): This is the base class for the Devices.
     
     currentIP = The current ip address of the device (eg. 10.0.0.1)
-    Name = The name of the device (eg. "Ramingining Zebra")
+    Name = The name of the device (eg. "server 1")
     Site = The Name of the Site/Location
     Subnet = The CIDR annotated version of the devices residing subnet
     machineName = The Machine Name of the device (netbios name) '''

@@ -94,7 +94,7 @@ class device():
             print(self.Name + " is Down!")            
         
 if __name__ == '__main__':
-    test = device('192.168.1.21', 'lounge server', 'narrows', '192.168.1.0/24', 'Lounge-Server')
+    test = device('192.168.1.1', 'test', 'test', '192.168.1.0/24', 'test')
     test._pingStats(3)
     stats = test.getCurrentStatus()
     print(stats)

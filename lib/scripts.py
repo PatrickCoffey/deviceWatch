@@ -8,10 +8,11 @@
 
 import csv
 
-def _parseDeviceCSV(csvFile):
-    csvDevices = csv.reader(csvFile)
-    for row in csvDevices:
-        yield row
+def _parseDeviceCSV(fileName):
+    with open(fileName, 'r') as csvFile:
+        csvDevices = csv.reader(csvFile, delimiter=',', quotechar='"')
+        for row in csvDevices:
+            yield row
     
 def createDeviceList(csvFile):
     deviceList = []

@@ -41,20 +41,35 @@ class device(object):
         self._updateStatus()
     
     def _ping(self):
+        #if platform.system() == 'Windows':
+            #response = subprocess.Popen(["ping", "-n 1", self.currentIP.__str__()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            #response = os.system("ping -n 1 " + self.currentIP.__str__() + ' > NUL 2>&1')
+        #elif platform.system() == 'Linux':
+            #response = subprocess.Popen(["ping", "-c 1", self.currentIP.__str__()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            #response = os.system("ping -c 1 " + self.currentIP.__str__() + ' >/dev/null 2>&1')
         if platform.system() == 'Windows':
-            response = subprocess.Popen(["ping", "-n 1", self.currentIP.__str__()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ping = subprocess.Popen("ping -n 1 " + self.currentIP.__str__(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            response, error = ping.communicate()            
             #response = os.system("ping -n 1 " + self.currentIP.__str__())
         elif platform.system() == 'Linux':
-            response = subprocess.Popen(["ping", "-c 1", self.currentIP.__str__()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ping = subprocess.Popen("ping -c 1 " + self.currentIP.__str__(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            response, error = ping.communicate()
             #response = os.system("ping -c 1 " + self.currentIP.__str__())
         else:
             print('Error: Invalid System type (' + platform.system() + ')')
             return(2)
+
+        ret = pingparser.parse(response, platform.system())
         
-        if response == 0:
+        if ret['sent'] == ret['received']:
             return(0)
         else:
             return(1)
+        
+        #if response == 0:
+            #return(0)
+        #else:
+            #return(1)
         
     def _pingStats(self, count=5):
         if platform.system() == 'Windows':
@@ -69,7 +84,7 @@ class device(object):
             print('Error: Invalid System type (' + platform.system() + ')')
             return(2)
         
-        ret = pingparser.parse(response) 
+        ret = pingparser.parse(response, platform.system()) 
         self.currentStats = ret
         return ret
     
@@ -83,7 +98,7 @@ class device(object):
         status = self._ping()
         if status == None:
             self.currentStatus = 1
-        else:
+        elif status == 0:
             self.currentStatus = 0
             
     def getCurrentStatus(self):
@@ -94,8 +109,7 @@ class device(object):
             print(self.Name + " is Down!")            
         
 if __name__ == '__main__':
-    test = device('192.168.1.1', 'test', 'test', '192.168.1.0/24', 'test')
-    test._pingStats(3)
-    stats = test.getCurrentStatus()
-    print(stats)
-    print(test.currentStats.__str__())
+    up = device('127.0.0.1', 'up', 'test', '192.168.1.0/24', 'test')
+    up.getCurrentStatus()
+    down = device('127.0.0.11', 'down', 'test', '192.168.1.0/24', 'test')
+    down.getCurrentStatus()

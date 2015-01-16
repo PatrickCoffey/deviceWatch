@@ -11,7 +11,6 @@ import sqlite3
 import os
 import sys
 
-import utils
 
 class dbObjectBase(object):
     '''

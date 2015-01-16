@@ -4,7 +4,8 @@
 # Wing IDE project file : User-specific branch                   #
 ##################################################################
 [user attributes]
-cache.last-mime-type = {loc('unknown:<untitled> #8'): 'text/x-diff',
+cache.last-mime-type = {loc('unknown:<untitled> #13'): 'text/x-diff',
+                        loc('unknown:<untitled> #8'): 'text/x-diff',
                         loc('unknown:<untitled> #11'): 'text/x-diff'}
 debug.err-values = {None: {},
                     loc('lib/devices.py'): {},
